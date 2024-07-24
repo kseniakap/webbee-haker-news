@@ -1,0 +1,27 @@
+.articleId{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 60%;
+    margin: 20px auto 0;
+    h2{
+        font-size: 22px;
+        color: var(--main-color);   
+    }
+    span{
+        font-weight: 600;
+    }
+    .btns{
+        display: flex;
+        gap: 10px;
+        > a{
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            transition: var(--transiton-hover);
+            &:hover{
+                background-color: var(--main-color);
+            }
+        }     
+    }
+}
