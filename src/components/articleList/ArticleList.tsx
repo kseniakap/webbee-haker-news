@@ -2,14 +2,18 @@ import { newsAllApi } from '../../services/NewsServise';
 import Article from './article/Article';
 import Loader from '../loader/Loader';
 import st from './ArticleList.module.scss';
+import { useState } from 'react';
 
 const ArticleList = () => {
-  const { data: news, isLoading, error, refetch } = newsAllApi.useGetAllNewsQuery('1', {
-    pollingInterval: 60000,
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { data: news, isLoading, error, refetch } = newsAllApi.useGetAllNewsQuery(undefined, {
+    pollingInterval: 60000, //автоматическое обновление каждую минуту
   });
 
-  const handleRefresh = () => {
-    refetch();
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await refetch();
+    setIsRefreshing(false);
   };
 
   if (error) {
@@ -22,7 +26,10 @@ const ArticleList = () => {
 
   return (
     <>
-      <button onClick={handleRefresh}>Refresh</button>
+      <button onClick={handleRefresh} className={st.refresh}>
+        Refresh data
+      </button>
+      {isRefreshing && <Loader />}
       <ul className={st.list}>
         {news?.map((item) => (
           <Article item={item} key={item.id} />

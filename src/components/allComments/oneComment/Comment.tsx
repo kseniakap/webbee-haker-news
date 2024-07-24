@@ -10,15 +10,18 @@ type CommentProps = {
 
 const Comment: FC<CommentProps> = ({ comment }) => {
   const [isOpenComment, setIsOpenComment] = useState(false);
-  const { user, content, comments, comments_count } = comment;
+  const { user, content, comments, comments_count, dead, deleted } = comment;
   const treatedContent = DOMPurify.sanitize(content);
   const createMarkup = (htmlString: string) => ({ __html: htmlString });
+
+  if (deleted || dead) {
+    return <></>;
+  }
 
   return (
     <div className={st.comment}>
       <p className={st.subtitle}>{user}</p>
       <p dangerouslySetInnerHTML={createMarkup(treatedContent)} />
-      {/* <p>{getComments()}</p> */}
       {!comment.open && comments_count !== 0 && (
         <p className={st.show} onClick={() => setIsOpenComment(!isOpenComment)}>
           {!isOpenComment ? `Show ${comments_count} comments` : 'Close comments'}

@@ -15,7 +15,11 @@ const NewsIdPage = () => {
     return <Loader />;
   }
 
-  return <>{article && <ArticleId data={article} />}</>;
+  return (
+    <>
+      {article && <ArticleId data={article} />}
+    </>
+  );
 };
 
 export default NewsIdPage;

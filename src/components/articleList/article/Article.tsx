@@ -9,19 +9,21 @@ type ArticleProps = {
 
 const Article: FC<ArticleProps> = ({ item }) => {
   const router = useNavigate();
+  const { title, user, points, comments_count, time_ago } = item;
+
   return (
     <li key={item.id} className={st.article}>
       <div>
         <div className={st.block}>
-          <h3 onClick={() => router(`/item/${item.id}`)}>{item.title}</h3>
-          <p className={st.subtitle}>{item.user}</p>
+          <h3 onClick={() => router(`/item/${item.id}`)}>{title}</h3>
+          <p className={st.subtitle}>Author: {user}</p>
         </div>
         <div className={st.block}>
-          <p>{item.points} points</p>
-          <p>{item.comments_count} comments</p>
+          <p>{points} points</p> |
+          <p>{comments_count} comments</p>
         </div>
       </div>
-      <p>{item.time_ago}</p>
+      <p>{time_ago}</p>
     </li>
   );
 };
