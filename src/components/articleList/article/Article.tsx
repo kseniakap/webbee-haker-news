@@ -19,7 +19,8 @@ const Article: FC<ArticleProps> = ({ item }) => {
           <p className={st.subtitle}>Author: {user}</p>
         </div>
         <div className={st.block}>
-          <p>{points} points</p> |
+          <p>{points} points</p> 
+          <span>|</span>
           <p>{comments_count} comments</p>
         </div>
       </div>
