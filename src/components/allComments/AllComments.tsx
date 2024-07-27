@@ -1,18 +1,16 @@
-import { FC } from 'react';
+import { newsApi } from '../../services/NewsService';
 import { NewsItem } from '../../types/main';
 import Comment from './oneComment/Comment';
 import st from './AllComments.module.scss';
 
-type AllCommentsProps = {
-  data: NewsItem[] | undefined;
-};
-
-const AllComments: FC<AllCommentsProps> = ({ data }) => {
+const AllComments = () => {
+  const { data: comments, isLoading, error } = newsApi.useGetAllCommentsQuery(41081534);
+  console.log('comments', comments);
   return (
     <div className={st.comments}>
-      {data?.map((item: NewsItem, idx) => (
+      {comments?.map((item: NewsItem) => (
         <>
-          <Comment key={idx} comment={item} />
+          <Comment key={item.id} comment={item} />
         </>
       ))}
     </div>

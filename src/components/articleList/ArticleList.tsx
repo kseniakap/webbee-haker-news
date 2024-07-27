@@ -1,13 +1,15 @@
-import { newsAllApi } from '../../services/NewsServise';
+import { useState } from 'react';
+import { newsApi } from '../../services/NewsService';
 import Article from './article/Article';
 import Loader from '../loader/Loader';
 import st from './ArticleList.module.scss';
-import { useState } from 'react';
+import ErrorMessage from '../errorMessage/ErrorMessage';
+import { refreshInterfal } from '../../const';
 
 const ArticleList = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const { data: news, isLoading, error, refetch } = newsAllApi.useGetAllNewsQuery(undefined, {
-    pollingInterval: 60000, //автоматическое обновление каждую минуту
+  const { data: news, isLoading, error, refetch } = newsApi.useGetAllNewsQuery(undefined, {
+    pollingInterval: refreshInterfal, //автоматическое обновление каждую минуту
   });
 
   const handleRefresh = async () => {
@@ -17,11 +19,7 @@ const ArticleList = () => {
   };
 
   if (error) {
-    return <p>Error while fetching news</p>;
-  }
-
-  if (isLoading) {
-    return <Loader />;
+    return <ErrorMessage />;
   }
 
   return (
@@ -29,12 +27,15 @@ const ArticleList = () => {
       <button onClick={handleRefresh} className={st.refresh}>
         Refresh data
       </button>
-      {isRefreshing && <Loader />}
-      <ul className={st.list}>
-        {news?.map((item) => (
-          <Article item={item} key={item.id} />
-        ))}
-      </ul>
+      {!(isRefreshing || isLoading) ? (
+        <ul className={st.list}>
+          {news?.map((item) => (
+            <Article item={item} key={item.id} />
+          ))}
+        </ul>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

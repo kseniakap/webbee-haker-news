@@ -1,8 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { newsApi } from '../../../services/NewsService';
 import { NewsItem } from '../../../types/main';
+import SanitizedContent from '../../sanitizeComponent/SanitizeComponent';
 import st from './Comment.module.scss';
-
-import DOMPurify from 'dompurify';
 
 type CommentProps = {
   comment: NewsItem;
@@ -10,9 +10,23 @@ type CommentProps = {
 
 const Comment: FC<CommentProps> = ({ comment }) => {
   const [isOpenComment, setIsOpenComment] = useState(false);
-  const { user, content, comments, comments_count, dead, deleted } = comment;
-  const treatedContent = DOMPurify.sanitize(content);
-  const createMarkup = (htmlString: string) => ({ __html: htmlString });
+  const [childrenComments, setChildrenComments] = useState<NewsItem[]>([]);
+
+  const { id, user, content, comments_count, dead, deleted } = comment;
+  const { data: queryData, isLoading, isError, refetch } = newsApi.useGetAllCommentsQuery(id);
+
+  useEffect(() => {
+    if (queryData) {
+      setChildrenComments(queryData);
+    }
+  }, [queryData]);
+
+  const handleCommentClick = () => {
+    if (!isOpenComment && !isLoading && !isError) {
+      refetch();
+    }
+    setIsOpenComment(!isOpenComment);
+  };
 
   if (deleted || dead) {
     return <></>;
@@ -21,13 +35,13 @@ const Comment: FC<CommentProps> = ({ comment }) => {
   return (
     <div className={st.comment}>
       <p className={st.subtitle}>{user}</p>
-      <p dangerouslySetInnerHTML={createMarkup(treatedContent)} />
-      {!comment.open && comments_count !== 0 && (
-        <p className={st.show} onClick={() => setIsOpenComment(!isOpenComment)}>
-          {!isOpenComment ? `Show ${comments_count} comments` : 'Close comments'}
+      <SanitizedContent content={content} />
+      {comments_count !== 0 && (
+        <p className={st.show} onClick={handleCommentClick}>
+          {isOpenComment ? 'Close comments' : `Show ${comments_count} comments`}
         </p>
       )}
-      {isOpenComment && comments?.map((item: NewsItem) => <Comment comment={item} />)}
+      {isOpenComment && childrenComments.map((item: NewsItem) => <Comment key={item.id} comment={item} />)}
     </div>
   );
 };
