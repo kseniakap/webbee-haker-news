@@ -14,8 +14,14 @@ export const newsApi = createApi({
     getNewById: builder.query<NewsItem, number | string>({
       query: (id) => `news/${id}`,
     }),
-    getAllComments: builder.query<NewsItem[], number | string>({
-      query: (id) => `comments/${id}`,
+    // getAllComments: builder.query<NewsItem[], number | string>({
+    //   query: (id) => `comments/${id}`,
+    // }),
+    getAllRootComments: builder.query<NewsItem[], number | string>({
+      query: (id) => `comments/root/${id}`,
+    }),
+    getAllChildrenComments: builder.query<NewsItem[], number | string>({
+      query: (id) => `comments/children/${id}`,
     }),
   }),
 });

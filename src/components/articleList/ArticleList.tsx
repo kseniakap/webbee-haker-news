@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { newsApi } from '../../services/NewsService';
 import Article from './article/Article';
 import Loader from '../loader/Loader';
-import st from './ArticleList.module.scss';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import { refreshInterfal } from '../../const';
+import st from './ArticleList.module.scss';
 
 const ArticleList = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);

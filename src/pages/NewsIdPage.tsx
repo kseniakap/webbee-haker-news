@@ -1,22 +1,20 @@
 import { useParams } from 'react-router-dom';
-import Loader from '../components/loader/Loader';
-import ArticleId from '../components/articleId/ArticleId';
-import { newsApi } from '../services/NewsService';
-import ErrorMessage from '../components/errorMessage/ErrorMessage';
+import DataArticle from '../components/articleId/DataArticle';
+import RootComments from '../components/rootComments/RootComments';
 
 const NewsIdPage = () => {
   const { id } = useParams();
-  const { data: article, isLoading, error } = newsApi.useGetNewByIdQuery(id || '');
 
-  if (error) {
-    return <ErrorMessage />;
-  }
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  return <>{article && <ArticleId data={article} />}</>;
+  return (
+    <>
+      {id && (
+        <>
+          <DataArticle articleId={id} />
+          <RootComments articleId={id} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default NewsIdPage;

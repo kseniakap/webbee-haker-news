@@ -1,13 +1,11 @@
 .article {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid var(--main-color);
     cursor: pointer;
-    > p{
-        font-size: 13px;
-        color: var(--secondary-color);
-    }
+   
     h3{
         padding-right: 5px;
         color: var(--main-color);
@@ -17,10 +15,16 @@
             text-decoration: underline;
         }
     }
-    .block {
+    .block, .time {
         display: flex;
         gap: 5px;
         .subtitle{
+            color: var(--secondary-color);
+        }
+    }
+    .time{
+        > p{
+            font-size: 13px;
             color: var(--secondary-color);
         }
     }
