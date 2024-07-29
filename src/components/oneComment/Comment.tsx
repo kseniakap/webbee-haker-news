@@ -27,23 +27,24 @@ const Comment: FC<CommentProps> = ({ commentData }) => {
     setIsOpenComment(!isOpenComment);
   };
 
-  if (deleted || dead) {
-    return <></>;
-  }
-
   return (
     <div className={st.comment}>
-      <p className={st.subtitle}>{user}</p>
-      <SanitizedContent content={content} />
-      {comments_count !== 0 && (
-        <p className={st.show} onClick={handleCommentClick}>
-          {isOpenComment ? 'Close comments' : `Show ${comments_count} comments`}
-        </p>
+      {deleted || dead ? (
+        <p>comment has been deleted</p>
+      ) : (
+        <>
+          <p className={st.subtitle}>{user}</p>
+          <SanitizedContent content={content} />
+          {comments_count !== 0 && (
+            <p className={st.show} onClick={handleCommentClick}>
+              {isOpenComment ? 'Close comments' : `Show ${comments_count} comments`}
+            </p>
+          )}
+          {isError && <ErrorMessage />}
+          {isLoading && <Loader />}
+          {isOpenComment && childrenComments?.map((item: NewsItem) => <Comment key={item.id} commentData={item} />)}
+        </>
       )}
-      {/* <p className={st.show}>Обновить</p> */}
-      {isError && <ErrorMessage />}
-      {isLoading && <Loader />}
-      {isOpenComment && childrenComments?.map((item: NewsItem) => <Comment key={item.id} commentData={item} />)}
     </div>
   );
 };

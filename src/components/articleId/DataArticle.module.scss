@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin: 20px auto 0 ;
+    margin: 20px auto 10px;
     h2{
         font-size: 22px;
         color: var(--main-color);   
@@ -29,5 +29,11 @@
     }
     .bold{
         font-weight: 600;
+    }
+    .content{
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(218, 194, 150, 0.15);
     }
 }

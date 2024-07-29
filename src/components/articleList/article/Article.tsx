@@ -18,7 +18,8 @@ const Article: FC<ArticleProps> = ({ item }) => {
       <div>
         <div className={st.block}>
           <h3 onClick={() => router(`/item/${item.id}`)}>{title}</h3>
-          <h4 className={st.subtitle}>Author: {user}</h4>
+          <span>|</span>
+          <h4 className={st.subtitle}>{user}</h4>
         </div>
         <div className={st.block}>
           {points && <p>{getRating(points)}</p>}

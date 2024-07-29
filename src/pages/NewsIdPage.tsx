@@ -10,7 +10,7 @@ const NewsIdPage = () => {
       {id && (
         <>
           <DataArticle articleId={id} />
-          <RootComments articleId={id} />
+          {/* <RootComments articleId={id} /> */}
         </>
       )}
     </>

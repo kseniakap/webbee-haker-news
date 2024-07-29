@@ -7,6 +7,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import Loader from '../loader/Loader';
 import { getRating } from '../../utils/getRating';
 import { tranformData } from '../../utils/transformTime';
+import RootComments from '../rootComments/RootComments';
 
 type ArticleIdProps = {
   articleId: number | string;
@@ -23,7 +24,7 @@ const DataArticle: FC<ArticleIdProps> = ({ articleId }) => {
   }
 
   const { title, user, points, url, time, time_ago, content, comments_count } = dataArticle;
-  console.log(dataArticle);
+
   return (
     <div className={st.articleId}>
       <h2>{title}</h2>
@@ -46,9 +47,12 @@ const DataArticle: FC<ArticleIdProps> = ({ articleId }) => {
       {content !== '' && (
         <>
           <h3>Topic</h3>
-          <SanitizedContent content={content} />
+          <div className={st.content}>
+            <SanitizedContent content={content} />
+          </div>
         </>
       )}
+      <RootComments articleId={articleId} />
     </div>
   );
 };

@@ -17,6 +17,7 @@ const RootComments: FC<RootCommentsProps> = ({ articleId }) => {
     pollingInterval: refreshInterfal, //автоматическое обновление каждую минуту
   });
 
+  console.log(rootComments);
   const handleRefresh = async () => {
     setIsRefreshing(true);
     await refetch();
@@ -29,16 +30,21 @@ const RootComments: FC<RootCommentsProps> = ({ articleId }) => {
 
   return (
     <>
-      <button onClick={handleRefresh} className={st.refresh}>
-        Refresh comments
-      </button>
+      <div>
+        {!isRefreshing ? (
+          <button onClick={handleRefresh} className={st.refresh}>
+            Refresh comments
+          </button>
+        ) : (
+          <Loader />
+        )}
+        {!rootComments?.length && !isRefreshing && <p className={st.bold}>no comments</p>}
+      </div>
+
       {!(isRefreshing || isLoading) ? (
         <>
-          {!rootComments?.length && <p className={st.bold}>no comments</p>}
           {rootComments?.map((item: NewsItem) => (
-            <>
-              <Comment key={item.id} commentData={item} />
-            </>
+            <Comment key={item.id} commentData={item} />
           ))}
         </>
       ) : null}

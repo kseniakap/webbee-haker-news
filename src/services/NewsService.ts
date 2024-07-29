@@ -14,9 +14,6 @@ export const newsApi = createApi({
     getNewById: builder.query<NewsItem, number | string>({
       query: (id) => `news/${id}`,
     }),
-    // getAllComments: builder.query<NewsItem[], number | string>({
-    //   query: (id) => `comments/${id}`,
-    // }),
     getAllRootComments: builder.query<NewsItem[], number | string>({
       query: (id) => `comments/root/${id}`,
     }),
