@@ -7,17 +7,18 @@ import { refreshInterfal } from '../../const';
 import st from './ArticleList.module.scss';
 
 const ArticleList = () => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showRefreshMessage, setShowRefreshMessage] = useState(false);
   const { data: news, isLoading, error, refetch } = newsApi.useGetAllNewsQuery(undefined, {
     pollingInterval: refreshInterfal, //автоматическое обновление каждую минуту
   });
 
   const handleRefresh = async () => {
-    setIsRefreshing(true);
+    setShowRefreshMessage(true);
     await refetch();
-    setIsRefreshing(false);
+    setTimeout(() => setShowRefreshMessage(false), 3000);
   };
 
+  console.log(news);
   if (error) {
     return <ErrorMessage />;
   }
@@ -27,7 +28,8 @@ const ArticleList = () => {
       <button onClick={handleRefresh} className={st.refresh}>
         Refresh data
       </button>
-      {!(isRefreshing || isLoading) ? (
+      {showRefreshMessage && <p className={st.message}>data refresh</p>}
+      {!isLoading ? (
         <ul className={st.list}>
           {news?.map((item) => (
             <Article item={item} key={item.id} />

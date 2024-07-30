@@ -17,7 +17,6 @@ const RootComments: FC<RootCommentsProps> = ({ articleId }) => {
     pollingInterval: refreshInterfal, //автоматическое обновление каждую минуту
   });
 
-  console.log(rootComments);
   const handleRefresh = async () => {
     setIsRefreshing(true);
     await refetch();
