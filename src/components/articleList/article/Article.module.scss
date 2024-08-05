@@ -6,10 +6,9 @@
     padding: 10px;
     border-bottom: 1px solid var(--main-color);
     cursor: pointer;
-   
-    h3{
-        color: var(--main-color);
-        transition:var(--transiton-hover);
+    a {
+        color: var(--main-color)!important;
+        transition: var(--transiton-hover);
         &:hover{
             text-decoration: underline;
         }

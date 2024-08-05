@@ -1,41 +1,41 @@
-import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import SanitizedContent from '../sanitizeComponent/SanitizeComponent';
-import st from './DataArticle.module.scss';
 import { newsApi } from '../../services/NewsService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Loader from '../loader/Loader';
 import { getRating } from '../../utils/getRating';
 import { tranformData } from '../../utils/transformTime';
 import RootComments from '../rootComments/RootComments';
+import st from './DataArticle.module.scss';
 
 type ArticleIdProps = {
   articleId: number | string;
 };
 
-const DataArticle: FC<ArticleIdProps> = ({ articleId }) => {
+const DataArticle = ({ articleId }: ArticleIdProps) => {
   const { data: dataArticle, isLoading, error } = newsApi.useGetNewByIdQuery(articleId);
-  if (error) {
-    return <ErrorMessage />;
-  }
 
-  if (isLoading || !dataArticle) {
+  if (isLoading) {
     return <Loader />;
   }
 
-  const { title, user, points, url, time, time_ago, content, comments_count } = dataArticle;
+  if (error || !dataArticle) {
+    return <ErrorMessage />;
+  }
+
+  const { title, user, points, url, time, timeAgo, content, commentsCount } = dataArticle;
 
   return (
     <div className={st.articleId}>
       <h2>{title}</h2>
       <div>
         <p>
-          Athor: <span>{user}</span>
+          Author: <span>{user}</span>
         </p>
         {points && <p>Rating: {getRating(points)}</p>}
         <p>Date: {tranformData(time)}</p>
-        <p>{comments_count} comments</p>
-        <p>{time_ago}</p>
+        <p>{commentsCount} comments</p>
+        <p>{timeAgo}</p>
       </div>
       <div className={st.btns}>
         <a href={url} target="blank">
@@ -44,7 +44,7 @@ const DataArticle: FC<ArticleIdProps> = ({ articleId }) => {
         <Link to="/">Go back</Link>
       </div>
       <hr />
-      {content !== '' && (
+      {content && (
         <>
           <h3>Topic</h3>
           <div className={st.content}>

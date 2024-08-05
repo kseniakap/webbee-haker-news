@@ -1,24 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { News, NewsItem } from '../types/main';
-
-const API_URL = 'http://localhost:4000';
+import { Comments, News, NewsItemTransform } from '../types/main';
+import { apiUrl } from '../const';
 
 export const newsApi = createApi({
   reducerPath: 'newsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
   tagTypes: ['News'],
   endpoints: (builder) => ({
     getAllNews: builder.query<News[], void>({
       query: () => 'news',
     }),
-    getNewById: builder.query<NewsItem, number | string>({
+    getNewById: builder.query<NewsItemTransform, number | string>({
       query: (id) => `news/${id}`,
     }),
-    getAllRootComments: builder.query<NewsItem[], number | string>({
-      query: (id) => `comments/root/${id}`,
-    }),
-    getAllChildrenComments: builder.query<NewsItem[], number | string>({
-      query: (id) => `comments/children/${id}`,
+    getAllComments: builder.query<Comments[], number | string>({
+      query: (id) => `comments/${id}`,
     }),
   }),
 });

@@ -4,20 +4,19 @@ export interface News {
   points?: number | null;
   user?: string | null;
   time: number;
-  time_ago: string;
-  comments_count: number;
+  timeAgo: string;
+  commentsCount: number;
   type: string;
   url?: string;
   domain?: string;
 }
-
-export interface NewsItem {
+interface NewsItem {
   id: number;
   title: string;
   points: number | null;
   user: string | null;
   time: number;
-  time_ago: string;
+  timeAgo: string;
   content: string;
   deleted?: boolean;
   dead?: boolean;
@@ -26,6 +25,21 @@ export interface NewsItem {
   domain?: string;
   comments: NewsItem[];
   level?: number;
-  comments_count: number;
+  commentsCount: number;
   open?: boolean;
 }
+
+// Интерфейс получаемых данных для одной новости
+export interface NewsItemTransform {
+  id: number;
+  title: string;
+  points: number | null;
+  user: string | null;
+  time: number;
+  timeAgo: string;
+  content: string;
+  url?: string;
+  commentsCount: number;
+}
+
+export interface Comments extends NewsItem {}

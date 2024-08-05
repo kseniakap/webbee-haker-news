@@ -7,9 +7,7 @@ function PageContainer(props: PropsWithChildren) {
   return (
     <Suspense fallback={<Loader />}>
       <Header />
-      <div className={st.container}>
-        <>{props.children}</>
-      </div>
+      <div className={st.container}>{props.children}</div>
     </Suspense>
   );
 }
