@@ -6,7 +6,7 @@ import { News } from '../../types/main';
 const ArticleList = () => {
   return (
     <PageContainer>
-      <RefreshData text="articles" method="useGetAllNewsQuery">
+      <RefreshData text="news" method="useGetAllNewsQuery">
         {(data) => data?.map((item: News) => <Article key={item.id} item={item} />)}
       </RefreshData>
     </PageContainer>
