@@ -19,10 +19,12 @@ const RefreshData = ({ id, text, method, children }: RefreshDataProps) => {
     method === 'getAllRootComments'
       ? newsApi.useGetAllCommentsQuery(id as number, { pollingInterval: refreshInterfal })
       : newsApi.useGetAllNewsQuery(undefined, { pollingInterval: refreshInterfal });
-      
+
   const handleRefresh = async () => {
     await refetch();
   };
+
+  console.log(data);
 
   if (error) {
     return <ErrorMessage />;

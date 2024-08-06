@@ -42,4 +42,6 @@ export interface NewsItemTransform {
   commentsCount: number;
 }
 
-export interface Comments extends NewsItem {}
+export type Comments = Omit<NewsItem, 'title' | 'points' | 'url' | 'domain' | 'comments'> & {
+  comments: Comments[];
+};
