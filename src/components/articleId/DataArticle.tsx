@@ -38,9 +38,11 @@ const DataArticle = ({ articleId }: ArticleIdProps) => {
         <p>{timeAgo}</p>
       </div>
       <div className={st.btns}>
-        <a href={url} target="blank">
-          Link to the new
-        </a>
+        {url && (
+          <a href={url} target="blank">
+            Link to the new
+          </a>
+        )}
         <Link to="/">Go back</Link>
       </div>
       <hr />
