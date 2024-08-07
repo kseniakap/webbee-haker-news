@@ -1,7 +1,5 @@
-import PageContainer from '../components/pageContainer/PageContainer';
-
 const NotFound = () => {
-  return <PageContainer>NotFound</PageContainer>;
+  return <p>NotFound</p>;
 };
 
 export default NotFound;

@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { NewsIdPage, NotFound } from '../pages';
+import NotFound from '../pages/NotFound';
 import ArticleList from '../components/articleList/ArticleList';
 import ROUTES from '../const/routes';
+import DataArticle from '../components/articleId/DataArticle';
 
 const router = createBrowserRouter([
   {
@@ -10,10 +11,10 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES.ARTICLE,
-    element: <NewsIdPage />,
+    element: <DataArticle />,
   },
   {
-    path: ROUTES.NOTFOUND,
+    path: ROUTES.NOT_FOUND,
     element: <NotFound />,
   },
 ]);

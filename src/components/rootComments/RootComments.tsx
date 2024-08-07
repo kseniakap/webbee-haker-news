@@ -8,11 +8,9 @@ type RootCommentsProps = {
 
 const RootComments = ({ articleId }: RootCommentsProps) => {
   return (
-    <>
-      <RefreshData id={articleId} text="comments" method="getAllRootComments">
-        {(data) => data?.map((item: Comments) => <Comment key={item.id} commentData={item} />)}
-      </RefreshData>
-    </>
+    <RefreshData<Comments>  id={articleId} text="comments" method="getAllRootComments">
+      {(data) => data?.map((item: Comments) => <Comment key={item.id} commentData={item} />)}
+    </RefreshData>
   );
 };
 

@@ -1,19 +1,16 @@
-import { Link } from 'react-router-dom';
-import SanitizedContent from '../sanitizeComponent/SanitizeComponent';
+import { Link, useParams } from 'react-router-dom';
+import SanitizedContent from '../sanitizedComponent/SanitizedComponent';
 import { newsApi } from '../../services/NewsService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Loader from '../loader/Loader';
 import { getRating } from '../../utils/getRating';
-import { tranformData } from '../../utils/transformTime';
+import { transformTime } from '../../utils/transformTime';
 import RootComments from '../rootComments/RootComments';
-import st from './DataArticle.module.scss';
+import styles from './DataArticle.module.scss';
 
-type ArticleIdProps = {
-  articleId: number | string;
-};
-
-const DataArticle = ({ articleId }: ArticleIdProps) => {
-  const { data: dataArticle, isLoading, error } = newsApi.useGetNewByIdQuery(articleId);
+const DataArticle = () => {
+  const { id } = useParams();
+  const { data: dataArticle, isLoading, error } = newsApi.useGetNewByIdQuery(id!);
 
   if (isLoading) {
     return <Loader />;
@@ -26,20 +23,20 @@ const DataArticle = ({ articleId }: ArticleIdProps) => {
   const { title, user, points, url, time, timeAgo, content, commentsCount } = dataArticle;
 
   return (
-    <div className={st.articleId}>
+    <div className={styles.articleId}>
       <h2>{title}</h2>
       <div>
         <p>
           Author: <span>{user}</span>
         </p>
         {points && <p>Rating: {getRating(points)}</p>}
-        <p>Date: {tranformData(time)}</p>
+        <p>Date: {transformTime(time)}</p>
         <p>{commentsCount} comments</p>
         <p>{timeAgo}</p>
       </div>
-      <div className={st.btns}>
+      <div className={styles.btns}>
         {url && (
-          <a href={url} target="blank">
+          <a href={url} target="_blank" rel="noreferrer">
             Link to the new
           </a>
         )}
@@ -49,12 +46,12 @@ const DataArticle = ({ articleId }: ArticleIdProps) => {
       {content && (
         <>
           <h3>Topic</h3>
-          <div className={st.content}>
+          <div className={styles.content}>
             <SanitizedContent content={content} />
           </div>
         </>
       )}
-      <RootComments articleId={articleId} />
+      <RootComments articleId={id!} />
     </div>
   );
 };

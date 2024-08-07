@@ -1,34 +1,45 @@
 import { useState } from 'react';
 import { Comments } from '../../types/main';
-import SanitizedContent from '../sanitizeComponent/SanitizeComponent';
-import st from './Comment.module.scss';
-import { tranformData } from '../../utils/transformTime';
-import { Link } from 'react-router-dom';
+import { transformTime } from '../../utils/transformTime';
+import SanitizedContent from '../sanitizedComponent/SanitizedComponent';
+import styles from './Comment.module.scss';
+import Loader from '../loader/Loader';
 
 type CommentProps = {
   commentData: Comments;
 };
-
 const Comment = ({ commentData }: CommentProps) => {
   const [isOpenComment, setIsOpenComment] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { user, time, content, dead, deleted, comments, commentsCount } = commentData;
 
-  console.log(commentData);
+  const handleOpenComments = async () => {
+    if (!isOpenComment) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsOpenComment(true);
+      }, 800);
+    } else {
+      setIsOpenComment(false);
+    }
+  };
 
   return (
-    <div className={st.comment}>
+    <div className={styles.comment}>
       {deleted || dead ? (
         <p>comment has been deleted</p>
       ) : (
         <>
-          <p className={st.subtitle}>{user}</p>
-          <p>{tranformData(time)}</p>
+          <p className={styles.subtitle}>{user}</p>
+          <p>{transformTime(time)}</p>
           <SanitizedContent content={content} />
           {commentsCount > 0 && (
-            <p className={st.show} onClick={() => setIsOpenComment(!isOpenComment)}>
+            <p className={styles.show} onClick={handleOpenComments}>
               {isOpenComment ? 'Close comments' : `Show ${commentsCount} comments`}
             </p>
           )}
+          {isLoading && !isOpenComment && comments && comments.length > 0 && <Loader />}
           {isOpenComment && comments?.map((item: Comments) => <Comment key={item.id} commentData={item} />)}
         </>
       )}

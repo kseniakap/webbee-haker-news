@@ -6,12 +6,15 @@
     padding: 10px;
     border-bottom: 1px solid var(--main-color);
     cursor: pointer;
-    a {
-        color: var(--main-color)!important;
-        transition: var(--transiton-hover);
+    .link {
+        color: var(--main-color);
+        transition: var(--transition-hover);
         &:hover{
             text-decoration: underline;
         }
+    }
+    .block{
+        margin-bottom: 5px;
     }
     .block, .time {
         display: flex;

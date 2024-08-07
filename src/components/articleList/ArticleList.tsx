@@ -1,15 +1,12 @@
 import Article from './article/Article';
-import PageContainer from '../pageContainer/PageContainer';
 import RefreshData from '../refreshData/RefreshData';
 import { News } from '../../types/main';
 
 const ArticleList = () => {
   return (
-    <PageContainer>
-      <RefreshData text="news" method="useGetAllNewsQuery">
-        {(data) => data?.map((item: News) => <Article key={item.id} item={item} />)}
-      </RefreshData>
-    </PageContainer>
+    <RefreshData<News> text="news" method="useGetAllNewsQuery">
+      {(data) => data?.map((item: News) => <Article key={item.id} item={item} />)}
+    </RefreshData>
   );
 };
 

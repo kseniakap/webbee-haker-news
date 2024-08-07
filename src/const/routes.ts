@@ -1,7 +1,7 @@
 const ROUTES = {
   HOME: '/',
   ARTICLE: '/item/:id',
-  NOTFOUND: '*',
+  NOT_FOUND: '*',
 } as const;
 
 export default ROUTES;

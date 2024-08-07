@@ -1,14 +1,13 @@
 import LogoImg from './logo.png';
-import st from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import styles from './Header.module.scss';
 
 const Header = () => {
   return (
-    <header className={st.header}>
-      <Link to="/">
+    <header className={styles.header}>
+      <div>
         <img src={LogoImg} alt="logo" />
         <h2>Haker news</h2>
-      </Link>
+      </div>
     </header>
   );
 };
